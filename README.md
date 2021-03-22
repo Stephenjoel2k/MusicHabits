@@ -1,4 +1,4 @@
-# vue-project
+# Music Habits
 
 ## Current Status
 
