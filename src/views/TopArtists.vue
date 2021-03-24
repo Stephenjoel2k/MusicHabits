@@ -1,16 +1,18 @@
 <template>
 
 
-    <v-container width=80 justify-center>
+    <v-container width=80 justify-center >
 
       
       <!-- Can be a separate component called buttons terms -->
-      <v-card flat class="py-5">
+      
+       <v-card flat class="py-5">
+        <v-img src="../assets/artist.jpg" class="white--text align-end" height="200px">
         <v-card-text>
-
+         
           <v-row align="center" justify="center">
             <v-col cols="12" class="mb-5">
-              <h1 class="text-center">
+              <h1 class="text-center display-2">
                 Top Artists
               </h1>
             </v-col>
@@ -18,13 +20,14 @@
 
           
           <v-row align="center" justify="center">
-            <v-btn-toggle mandatory>
-              <v-btn @click="displayTop('long_term')">All Time</v-btn>
-              <v-btn @click="displayTop('medium_term')">~ 6 Months</v-btn>
-              <v-btn @click="displayTop('short_term')">~ 1 Month</v-btn>
+            <v-btn-toggle mandatory class="mb-5">
+              <v-btn @click="displayTop('long_term')" class="caption black white--text">All Time</v-btn>
+              <v-btn @click="displayTop('medium_term')" class="caption black white--text">~ 6 Months</v-btn>
+              <v-btn @click="displayTop('short_term')" class="caption black white--text" >~ 1 Month</v-btn>
             </v-btn-toggle>
           </v-row>
         </v-card-text>
+      </v-img>
       </v-card>
 
       
@@ -85,3 +88,4 @@
     }
   }
 </script>
+

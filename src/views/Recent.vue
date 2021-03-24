@@ -4,15 +4,18 @@
     <v-container width=80 justify-center>
  
       <v-card flat class="py-5">
+        <v-img src="../assets/recent.jpg" class="white--text align-end" height="200px">
         <v-card-text>
           <v-row align="center" justify="center">
-            <v-col cols="12" class="mb-5">
-              <h1 class="text-center">
+            <h1 class="text-center display-2">
                 Recently Played
               </h1>
+            <v-col cols="12" class="mb-5">
+              
             </v-col>
           </v-row>
         </v-card-text>
+        </v-img>
       </v-card>
 
 
