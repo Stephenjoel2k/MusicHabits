@@ -5,8 +5,10 @@
     <v-app-bar app class="black">
         <v-app-bar-nav-icon dark class="d-none d-md-flex" @click="drawer = !drawer"></v-app-bar-nav-icon>
         <v-app-bar-title class="text-lowercase white--text">
-            <span class="font-weight-light">Music</span>
-            <span>Habits.</span>
+            <h3>
+              <span class="font-weight-light grey--text">music</span>
+              <span class="font-weight-dark">habits.</span>
+            </h3>
         </v-app-bar-title>
     </v-app-bar>
 
