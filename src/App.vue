@@ -42,3 +42,10 @@ export default {
     }
 };
 </script>
+
+
+<style>
+  #app{
+    background: #EAEBEB;
+  }
+</style>

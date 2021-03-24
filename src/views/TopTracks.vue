@@ -3,7 +3,7 @@
      <v-container width=80 justify-center>
 
       
-      <v-card flat class="py-5">
+      <v-card flat class="py-5" color="#EAEBEB">
         <v-img src="../assets/track.jpg" class="white--text align-end" height="200px">
         <v-card-text>
          
@@ -27,21 +27,19 @@
       </v-img>
       </v-card>
 
-      
+
 
       <v-row dense>
-        
         <v-col v-for="(item, i) in items" :key="i" cols="12">
-
           <v-card dark :href=item.external_urls.spotify target="_blank">
-
             <div class="d-flex flex-no-wrap justify-space-between">
               <div>
-                <v-card-title v-text="item.name"></v-card-title>
-                <v-card-subtitle v-text="item.artists[0].name"></v-card-subtitle>
+                <v-card-title>{{i+1}} - {{item.name}}</v-card-title>
+                <v-card-subtitle>{{item.artists[0].name}}</v-card-subtitle>
+                <v-card-subtitle> popularity: {{item.popularity}}%</v-card-subtitle>
               </div>
-              
-              <v-avatar class="ma-3" size="80" tile>
+    
+              <v-avatar class="ma-3" size="100" tile>
                 <v-img :src="item.album.images[1].url"></v-img>
               </v-avatar>
             </div>
@@ -49,6 +47,9 @@
           </v-card>
         </v-col>
       </v-row>
+
+
+
     </v-container>
 
 </template>

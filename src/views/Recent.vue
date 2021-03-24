@@ -3,7 +3,7 @@
 
     <v-container width=80 justify-center>
  
-      <v-card flat class="py-5">
+      <v-card flat class="py-5" color="#EAEBEB">
         <v-img src="../assets/recent.jpg" class="white--text align-end" height="200px">
         <v-card-text>
           <v-row align="center" justify="center">
@@ -26,11 +26,12 @@
           <v-card dark :href=item.track.external_urls.spotify target="_blank">
             <div class="d-flex flex-no-wrap justify-space-between">
               <div>
-                <v-card-title v-text="item.track.name"></v-card-title>
-                <v-card-subtitle v-text="item.track.album.artists[0].name"></v-card-subtitle>
+                <v-card-title>{{item.track.name}}</v-card-title>
+                <v-card-subtitle>{{item.track.album.artists[0].name}}</v-card-subtitle>
+                <v-card-subtitle>{{format(item.played_at)}}</v-card-subtitle>
               </div>
     
-              <v-avatar class="ma-3" size="80" tile>
+              <v-avatar class="ma-3" size="100" tile>
                 <v-img :src="item.track.album.images[1].url"></v-img>
               </v-avatar>
             </div>
@@ -46,6 +47,7 @@
 <script>
 
   import axios from 'axios';
+  import moment from 'moment'
 
   export default {
     data() {
@@ -63,6 +65,11 @@
           }
         });
         this.items = response.data.items;
+      },
+      format(value){
+        if(value){
+          return moment(String(value)).format('MM/DD hh:mm A')
+        }
       }
     },
     async mounted(){

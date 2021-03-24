@@ -6,7 +6,7 @@
       
       <!-- Can be a separate component called buttons terms -->
       
-       <v-card flat class="py-5">
+       <v-card flat class="py-5" color="#EAEBEB">
         <v-img src="../assets/artist.jpg" class="white--text align-end" height="200px">
         <v-card-text>
          
@@ -38,11 +38,12 @@
           <v-card dark :href=item.external_urls.spotify target="_blank">
             <div class="d-flex flex-no-wrap justify-space-between">
               <div>
-                <v-card-title v-text="item.name"></v-card-title>
-                <v-card-subtitle v-text="item.popularity"></v-card-subtitle>
+                <v-card-title>{{i+1}} - {{item.name}}</v-card-title>
+                <v-card-subtitle>{{item.genres}}</v-card-subtitle>
+                <v-card-subtitle> popularity: {{item.popularity}}%</v-card-subtitle>
               </div>
     
-              <v-avatar class="ma-3" size="80" tile>
+              <v-avatar class="ma-3" size="100" tile>
                 <v-img :src="item.images[1].url"></v-img>
               </v-avatar>
             </div>
