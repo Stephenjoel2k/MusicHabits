@@ -37,7 +37,7 @@ export default {
         this.$nextTick(function () {
             window.setInterval(() => {
                 this.isValidStorage()
-            },100000);
+            },1000);
         })
     }
 };
