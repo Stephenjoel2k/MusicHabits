@@ -1,32 +1,22 @@
 <template>
  
      <v-container width=80 justify-center>
+       
+      <Header header_title="Top Tracks" header_background='track' />
 
-      
-      <v-card flat class="py-5" color="#EAEBEB">
-        <v-img src="../assets/track.jpg" class="white--text align-end" height="200px">
-        <v-card-text>
-         
-          <v-row align="center" justify="center">
-            <v-col cols="12" class="mb-5">
-              <h1 class="text-center display-2">
-                Top Tracks
-              </h1>
-            </v-col>
-          </v-row>
+      <!-- Can eb a separate buttons component -->
 
-          
-          <v-row align="center" justify="center">
-            <v-btn-toggle mandatory class="mb-5">
-              <v-btn @click="displayTop('long_term')" class="caption black white--text">All Time</v-btn>
-              <v-btn @click="displayTop('medium_term')" class="caption black white--text">~ 6 Months</v-btn>
-              <v-btn @click="displayTop('short_term')" class="caption black white--text" >~ 1 Month</v-btn>
-            </v-btn-toggle>
-          </v-row>
-        </v-card-text>
-      </v-img>
-      </v-card>
+      <v-row align="center" justify="center">
+        <v-btn-toggle mandatory class="mb-3">
+          <v-btn @click="displayTop('long_term')" class="caption black white--text">All Time</v-btn>
+          <v-btn @click="displayTop('medium_term')" class="caption black white--text">~ 6 Months</v-btn>
+          <v-btn @click="displayTop('short_term')" class="caption black white--text" >~ 1 Month</v-btn>
+        </v-btn-toggle>
+      </v-row>
 
+    
+
+      <!-- Can be a separate component called as tracks/artists cards -->
 
 
       <v-row dense>
@@ -57,8 +47,10 @@
 <script>
 
   import axios from 'axios';
-  
+  import Header from '../components/Header';
+
   export default {
+    components: {Header},
     data() {
       return {
         items: [],

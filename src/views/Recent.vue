@@ -3,24 +3,10 @@
 
     <v-container width=80 justify-center>
  
-      <v-card flat class="py-5" color="#EAEBEB">
-        <v-img src="../assets/recent.jpg" class="white--text align-end" height="200px">
-        <v-card-text>
-          <v-row align="center" justify="center">
-            <h1 class="text-center display-2">
-                Recently Played
-              </h1>
-            <v-col cols="12" class="mb-5">
-              
-            </v-col>
-          </v-row>
-        </v-card-text>
-        </v-img>
-      </v-card>
-
-
+      <Header header_title="Recently Played" header_background='recent' />
 
       <!-- Can be a separate component called as tracks/artists cards -->
+
       <v-row dense>
         <v-col v-for="(item, i) in items" :key="i" cols="12">
           <v-card dark :href=item.track.external_urls.spotify target="_blank">
@@ -48,8 +34,10 @@
 
   import axios from 'axios';
   import moment from 'moment'
+  import Header from '../components/Header'
 
   export default {
+    components: {Header},
     data() {
       return {
         items: [],

@@ -1,13 +1,15 @@
 <template>
     <div class="Home">
+      <v-container width=80 justify-center>
       <!-- Display if content is true -->
         <div v-if="content">
-          <h1>Please Connect with spotify to continue!</h1>
+          <h2>Please Connect with spotify to continue!</h2>
           <v-btn color="green" href="https://yourmusichabit.herokuapp.com/auth/login">
             <v-icon left>mdi-import</v-icon>
             <span>Spotify</span>
           </v-btn>
         </div>
+      </v-container>
     </div>
 </template>
 

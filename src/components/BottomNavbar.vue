@@ -1,20 +1,16 @@
 <template>
   <v-card
   >
-    <v-bottom-navigation dark app class="d-md-none black" fixed >
-      <v-btn to=/top-artists text>
-        <span>Top Artists</span>
-        <v-icon>mdi-account</v-icon>
+    <v-bottom-navigation dark app class="d-md-none black" fixed grow>
+      
+      <v-btn to=/profile text>
+        <span>Profile</span>
+        <v-icon>mdi-account-circle</v-icon>
       </v-btn>
 
-      <v-btn to=/top-tracks text>
-        <span>Top Tracks</span>
-        <v-icon>mdi-album</v-icon>
-      </v-btn>
-
-      <v-btn to=/recently-played text>
-        <span>Recently Played</span>
-        <v-icon>mdi-history</v-icon>
+      <v-btn to=/dashboard text>
+        <span>Dashboard</span>
+        <v-icon>mdi-chart-histogram</v-icon>
       </v-btn>
       
 
@@ -26,11 +22,6 @@
 export default {
    data() {
     return {
-      links: [
-        { icon: 'mdi-account', text: 'Top Artists', route: '/top-artists' },
-        { icon: 'mdi-album', text: 'Top Tracks', route: '/top-tracks' },
-        { icon: 'mdi-history', text: 'Recent', route: '/recently-played' },
-      ],
     }
   }
 }

@@ -37,17 +37,17 @@ export default {
     return {
       drawer: false,
       links: [
+        [ 'mdi-account-circle', 'Profile', '/profile' ],
+        [ 'mdi-chart-histogram', 'Dashboard', '/dashboard' ],
         [ 'mdi-account', 'Top Artists', '/top-artists' ],
         [ 'mdi-album', 'Top Tracks',  '/top-tracks' ],
         [ 'mdi-history', 'Recent', '/recently-played' ],
+        
       ],
       value: 1,
     }
   },
   methods : {
-    isLogin() {
-      return this.$route.name === 'TopTracks'
-    }
   }
 }
 </script>
