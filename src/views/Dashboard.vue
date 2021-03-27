@@ -8,7 +8,7 @@
       <Miniboard title="Top Artists" background='artist' route='/top-artists' />
       <Miniboard title="Top Tracks" background='track' route='/top-tracks' />
       <Miniboard title="Recents" background='recent' route='/recently-played' />
-      <Miniboard title="Your Taste" background='taste' route='/your-taste' />
+      <Miniboard title="Your Taste" background='taste' route='/your-taste' disable/>
       <Miniboard title="Music Map" background='geography' route='/top-artists' disable />
       <Miniboard title="Genre Map" background='genre' route='/top-artists' disable />
 
