@@ -22,8 +22,24 @@
       }
     },
     methods: {
+        isValid(){
+          if(localStorage.expiry && localStorage.access_token){
+          const time = new Date();
+          const expiry = new Date(localStorage.expiry);
+          if(expiry <= time){
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("expiry");
+            window.location.href = 'https://yourmusichabit.herokuapp.com/auth/login';
+          }else{
+            this.$router.push('/dashboard')
+          }
+        }
+      }
     },
     async mounted(){
+
+      this.isValid();
+
       if(this.$route.query.access_token != undefined && this.$route.query.access_token != null){
           const access_token = this.$route.query.access_token;
           localStorage.access_token = access_token;
