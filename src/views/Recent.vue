@@ -46,7 +46,19 @@
       }
     },
     methods : {
+      format(value){
+        if(value){
+          return moment(String(value)).format('MM/DD hh:mm A')
+        }
+      },
       async getRecentlyPlayed(){
+        if(sessionStorage.recents){
+          await this.getRecentlyPlayedFromLocal();
+        }else{
+          await this.getRecentlyPlayedFromAPI();
+        }
+      },
+      async getRecentlyPlayedFromAPI(){
         const url = "https://yourmusichabit.herokuapp.com/api/user/recently-played"
             const response = await axios.get(url, {
                 headers: {
@@ -54,19 +66,19 @@
                     "Access-Control-Allow-Origin": "*",
                 }
             });
-        this.items = response.data.data.items;
+        const data = response.data.data;
+        sessionStorage.setItem('recents', JSON.stringify(data));
+        this.items = data.items;
       },
-      format(value){
-        if(value){
-          return moment(String(value)).format('MM/DD hh:mm A')
-        }
-      }
+      async getRecentlyPlayedFromLocal(){
+        this.items = JSON.parse(sessionStorage.getItem('recents')).items;
+      },
     },
     async mounted(){
       if(!localStorage.access_token){
         this.$router.push('/');
       }
-
+      console.log("hello")
       await this.getRecentlyPlayed();
     }
   }

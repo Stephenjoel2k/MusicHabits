@@ -7,10 +7,7 @@
 
         <h3>Name : {{ profile.display_name }}</h3>
         <h3>Email : {{ profile.email }}</h3>
-        <h3>Followers : {{ profile.followers.total }}</h3>
         <h3>Account Type : {{profile.product}}</h3>
-
-
 
     </v-container>
 
@@ -32,14 +29,26 @@
     },
     methods : {
         async getUser(){
-            const url = "https://yourmusichabit.herokuapp.com/api/user"
+            if(localStorage.profile){
+              await this.getUserFromLocal();
+            }else{
+              await this.getUserFromAPI();
+            }
+        },
+        async getUserFromAPI(){
+          const url = "https://yourmusichabit.herokuapp.com/api/user"
             const response = await axios.get(url, {
                 headers: {
                     Authorization: "Bearer " + localStorage.access_token,
                     "Access-Control-Allow-Origin": "*",
                 }
             });
-            this.profile = response.data.data;
+            const profile = response.data.data;
+            this.profile = profile
+            localStorage.setItem('profile', JSON.stringify(profile));
+        },
+        async getUserFromLocal(){
+          this.profile = JSON.parse(localStorage.getItem('profile'));
         }
     },
     async mounted(){

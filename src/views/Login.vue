@@ -28,7 +28,7 @@
           const access_token = this.$route.query.access_token;
           localStorage.access_token = access_token;
           const time = new Date();
-          time.setMinutes(time.getMinutes() + 45);
+          time.setMinutes(time.getMinutes() + 59);
           localStorage.expiry = time;
           this.$router.push('dashboard');
       }
