@@ -1,23 +1,17 @@
 <template>
     <v-container width=80 justify-center>
 
-        <Header header_title="Discovery Tree" header_background='geography' />
+        <Header header_title="Discover Artists" header_background='cool' />
         
-  
         <!-- Toolbar to search a song -->
-        <v-toolbar color="orange accent-1">
-            <v-toolbar-title class="title mr-6 hidden-sm-and-down">
-                <v-icon>{{icon}}</v-icon>
-            </v-toolbar-title>
-            <v-autocomplete :search-input.sync="search" :items="items" :loading="isLoading" chips clearable
-            hide-details hide-no-data hide-selected item-text="name" item-value="id" :label="query_label" @input="onInput" return-object solo rounded>
+            <v-autocomplete dark :search-input.sync="search" :items="items" :loading="isLoading" chips clearable
+            hide-details hide-selected item-text="name" item-value="id" :label="query_label" @input="onInput" return-object solo rounded>
 
                 <template v-slot:no-data>
                     <v-list-item>
-                    <v-list-item-title>
-                        Search for
-                        <strong>{{type}}s</strong>
-                    </v-list-item-title>
+                        <v-list-item-title>
+                            Find Similar Artists
+                        </v-list-item-title>
                     </v-list-item>
                 </template>
 
@@ -47,66 +41,55 @@
                 </template>
 
             </v-autocomplete>
-            
-            <template v-slot:extension>
-                <v-tabs v-model="tab" :hide-slider="!model" color="blue-grey" slider-color="blue-grey">
-                    <v-row align="center" justify="center">
-                        <v-btn-toggle mandatory dense color="deep-purple accent-3" group class="mb-4">
-                            <v-btn @click="updateSearchType('track')">Track</v-btn>
-                            <v-btn @click="updateSearchType('artist')">Artist</v-btn>
-                        </v-btn-toggle>
-                    </v-row>
-                </v-tabs>
-            </template>
-       </v-toolbar>
 
-
-            <!-- Search Bar & Button-->
-            <v-flex class="d-flex flex-no-wrap">
-                <v-col sm12 lg8> 
-                    <v-autocomplete
-                        style="background:rgba(0,0,0,0)"
-                        v-model="select"
-                        :items="query_suggestions"
-                        :loading="isLoading"
-                        :search-input.sync="search"
-                        color="deep-purple accent-3"
-                        hide-no-data
-                        hide-selected
-                        item-text="Description"
-                        item-value="state"
-                        :label="query_label"
-                        placeholder="Start typing to Search"
-                        :prepend-icon="icon"
-                        return-object
-                        >
-                    </v-autocomplete>
-                    <!-- <v-text-field class="mt-2" :label="query_label" rounded dense filled>
-                    </v-text-field> -->
-                    <v-row align="center" justify="center">
-                        <v-btn-toggle mandatory dense color="deep-purple accent-3" group class="mb-4">
-                            <v-btn @click="updateSearchType('track')">Track</v-btn>
-                            <v-btn @click="updateSearchType('artist')">Artist</v-btn>
-                        </v-btn-toggle>
-                    </v-row>
-                </v-col>
-            </v-flex>
-
-            <v-list-item>
         
+        <v-card dark class="mt-5" v-if="selected != null">
+            <h3 class="text-center grey">Artists similar to</h3>
+            <div class="d-flex flex-no-wrap justify-space-between"> 
+              <div>
+                <v-card-title >
+                    {{selected.name}}
+                    <a :href=selected.external_urls.spotify target="_blank">
+                        <img class="ml-2" height="24" src="https://img.icons8.com/fluent/48/000000/spotify.png"/>
+                    </a>
+                    
+                </v-card-title>
+                
+                <v-flex class="d-flex flex-wrap ma-2">
+                    <v-btn outlined small  @click="playPreview(selected.id)">Preview</v-btn>
+                </v-flex>
+              </div>
+              <v-avatar class="ma-3" size="100" tile>
+                <v-img :src="selected.images[1].url"></v-img>
+              </v-avatar>
+            </div>
+          </v-card>
+        
+    <v-divider class="ma-5"></v-divider>
 
-        <v-row dense>
+    <div class="text-center">
+        <v-btn class="error mb-3" v-if="preview != null" @click="stopAudio">
+            Stop All Audio
+        </v-btn>
+    </div>
+
+    <v-row dense>
 
         <!-- The component tracks -->
-        <v-col v-for="(item) in items" :key="item.id" cols="12">
+        <v-col v-for="(item) in related_artists" :key="item.id" cols="12">
           <v-card dark>
             <div class="d-flex flex-no-wrap justify-space-between">
               <div>
-                <v-card-title>{{item.name}}</v-card-title>
+                <v-card-title>
+                    {{item.name}}
+                    <a :href=item.external_urls.spotify target="_blank">
+                        <img class="ml-2" height="24" src="https://img.icons8.com/fluent/48/000000/spotify.png"/>
+                    </a>
+                </v-card-title>
                 <v-flex class="d-flex flex-wrap">
-                    <v-btn outlined small class="ma-2" >Preview</v-btn>
+                    <v-btn outlined small class="ma-2" @click="playPreview(item.id)">Preview</v-btn>
                 <!-- Add function to preview similar -->
-                    <v-btn outlined small class="ma-2" >Find Similar</v-btn>
+                    <v-btn outlined small class="ma-2" @click="displaySimilar(item)">Find Similar</v-btn>
                 </v-flex>
               </div>
               <v-avatar class="ma-3" size="100" tile>
@@ -116,12 +99,8 @@
           </v-card>
         </v-col>
 
-
-        
-
-
-
       </v-row>
+
 
     </v-container>
 </template>
@@ -130,20 +109,23 @@
 
 import axios from 'axios';
 import Header from '../components/Header';
+import _ from 'lodash';
 
 export default {
     components: {Header},
-   data(){
+    data(){
         return{
+            items: [],
             related_artists: [],
-            query_label: "Search Track",
-            type: "track",
+            query_label: "Search Artist",
+            type: "artist",
             search: null,
-            icon: "mdi-album",
+            icon: "mdi-account",
             isLoading: false,
             model: null,
             tab: null,
-            selected: null
+            selected: null,
+            preview: null
         }
     },
     watch: {
@@ -156,6 +138,10 @@ export default {
       },
     },
     methods: {
+        displaySimilar: function(val){
+            this.selected = val;
+            this.getSimilarArtists();
+        },
         onInput: function(val) {
             this.selected = val;
             this.getSimilarArtists();
@@ -190,17 +176,40 @@ export default {
             .finally(() => (this.isLoading = false))
         },200),
 
-        updateSearchType(type){
-            this.type = type;
-            this.items = [];
-            this.search = "";
-            if(type == 'track'){
-                this.query_label = "Search Track";
-                this.icon = "mdi-album";
-            }else{
-                this.query_label = "Search Artist";
-                this.icon = "mdi-account";
+        //THIS IS THE FUNCTION WE NEED TO WOK ON
+        async playPreview(id) {
+            var url = `https://api.spotify.com/v1/artists/${id}/top-tracks?market=US`;
+            if(localStorage.profile){
+                const profile = JSON.parse(localStorage.getItem('profile'));
+                url = `https://api.spotify.com/v1/artists/${id}/top-tracks?market=${profile.country}`;
             }
+            const response = await axios.get(url, {
+                headers: {
+                    Authorization: "Bearer " + localStorage.access_token,
+                }
+            })
+            const tracks = [] 
+            response.data.tracks.forEach(track => {
+                if(track.preview_url != null){
+                    tracks.push(track.preview_url);
+                }
+            })
+            if(this.preview != null){
+                this.stopAudio()
+            }
+            const length = tracks.length;
+            const random = this.getRandomInt(length-1);
+            if(tracks.length > 1){
+                this.preview = new Audio(tracks[random]);
+            }
+            this.playAudio()
+        },
+        playAudio(){
+            this.preview.play();
+        },
+        stopAudio(){
+            this.preview.pause();
+            this.preview = null;
         },
 
         async getSimilarArtists(){
@@ -211,7 +220,11 @@ export default {
                 }
             })
             this.related_artists = response.data.artists;
+            
         },
+        getRandomInt(max) {
+            return Math.floor(Math.random() * Math.floor(max));
+        }
     },
     async mounted(){
         if(!localStorage.access_token){
@@ -220,3 +233,9 @@ export default {
     }
 }
 </script>
+
+
+<style scoped>
+    /* CSS Reset */
+a { margin:0; padding:0; font-size:100%; line-height:1; text-underline-offset: none;}
+</style>

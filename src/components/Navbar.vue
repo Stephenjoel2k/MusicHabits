@@ -42,7 +42,7 @@ export default {
         [ 'mdi-account', 'Top Artists', '/top-artists' ],
         [ 'mdi-album', 'Top Tracks',  '/top-tracks' ],
         [ 'mdi-history', 'Recent', '/recently-played' ],
-        ['mdi-tree', 'Discovery Tree', '/tree' ]
+        [ 'mdi-account-search', 'Discover Artists', '/discover-artists' ]
       ],
       value: 1,
     }

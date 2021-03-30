@@ -3,7 +3,7 @@
 
     <v-container width=80 justify-center >
       
-      <Header header_title="Top Artists" header_background='artist' />
+      <Header header_title="Top Artists" header_background='cool' />
       <TermButtons @display-top="getUserTop" />
       <Preloader :items="items"/>
       <TrackCards :items="items" type="artist" />

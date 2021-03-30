@@ -6,7 +6,7 @@ import TopArtists from '../views/TopArtists.vue'
 import Recent from '../views/Recent.vue'
 import Dashboard from '../views/Dashboard.vue'
 import Profile from '../views/Profile.vue'
-import Tree from '../views/Tree.vue'
+import DiscoverArtists from '../views/DiscoverArtists.vue'
 
 Vue.use(VueRouter)
 
@@ -43,9 +43,9 @@ const routes = [
     component: Profile
   },
   {
-    path: '/tree',
-    name: 'Tree',
-    component: Tree
+    path: '/discover-artists',
+    name: 'DiscoverArtists',
+    component: DiscoverArtists
   },
 ]
 

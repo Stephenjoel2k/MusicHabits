@@ -5,10 +5,10 @@
       <Header header_title="Dashboard" header_background='dashboard' />
 
 
-      <Miniboard title="Top Artists" background='artist' route='/top-artists' />
-      <Miniboard title="Top Tracks" background='track' route='/top-tracks' />
-      <Miniboard title="Recents" background='recent' route='/recently-played' />
-      <Miniboard title="Discovery Tree" background='geography' route='/tree' />
+      <Miniboard title="Top Artists" background='cool' route='/top-artists' />
+      <Miniboard title="Top Tracks" background='cool' route='/top-tracks' />
+      <Miniboard title="Recents" background='cool' route='/recently-played' />
+      <Miniboard title="Discover Artists" background='cool' route='/discover-artists' />
 
     </v-container>
 
