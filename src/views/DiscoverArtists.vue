@@ -1,7 +1,7 @@
 <template>
     <v-container width=80 justify-center>
 
-        <Header header_title="Discover Artists" header_background='cool' />
+        <Header header_title="Discover Artists" header_background='discover' />
         
         <!-- Toolbar to search a song -->
             <v-autocomplete dark :search-input.sync="search" :items="items" :loading="isLoading" chips clearable

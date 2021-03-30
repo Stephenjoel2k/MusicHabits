@@ -2,7 +2,7 @@
  
      <v-container width=80 justify-center>
        
-      <Header header_title="Top Tracks" header_background='cool' />
+      <Header header_title="Your Top Tracks" header_background='track' />
       <TermButtons @display-top="getUserTop" />
       <Preloader :items="items"/>
       <TrackCards :items="items" type="track" />

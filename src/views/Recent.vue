@@ -3,7 +3,7 @@
 
     <v-container width=80 justify-center>
  
-      <Header header_title="Recently Played" header_background='cool' />
+      <Header header_title="Your Recents" header_background='recent' />
 
       <!-- Can be a separate component called as tracks/artists cards -->
       <Preloader :items="items" />

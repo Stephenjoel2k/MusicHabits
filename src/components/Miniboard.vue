@@ -4,8 +4,8 @@
         <v-card-text>
          
           <v-row align="center" justify="center">
-            <v-col cols="12" class="mb-5">
-              <h1 class="text-center display-1">
+            <v-col cols="12" class="mb-3">
+              <h1 class="text-center display-1 text-lg-h3 text-sm-h4">
                 {{title}}
               </h1>
             </v-col>
