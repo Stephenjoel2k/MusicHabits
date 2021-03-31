@@ -42,7 +42,7 @@
 
             </v-autocomplete>
 
-        
+        <!-- The top "similar to" artist -->
         <v-card dark class="mt-5" v-if="selected != null">
             <h3 class="text-center grey">Artists similar to</h3>
             <div class="d-flex flex-no-wrap justify-space-between"> 
@@ -63,15 +63,79 @@
                 <v-img :src="selected.images[1].url"></v-img>
               </v-avatar>
             </div>
-          </v-card>
-        
-    <v-divider class="ma-5"></v-divider>
+        </v-card>
 
+        <v-divider class="ma-3"></v-divider>
+
+            <div class="text-center" v-if="selected != null" @click="shuffle">
+                <v-btn class="green ma-2">
+                    Random <v-icon>
+                        mdi-shuffle
+                    </v-icon>
+                </v-btn>
+            </div>
+        
+    
     <div class="text-center">
-        <v-btn class="error mb-3" v-if="preview != null" @click="stopAudio">
-            Stop All Audio
+        <v-btn class="error ma-2" v-if="preview != null" @click="stopAudio">
+            Stop <v-icon>
+                mdi-stop
+            </v-icon>
+        </v-btn>
+        <v-btn class="warning ma-2" v-if="player == false && track != null" @click="player = !player">
+            Play <v-icon>
+                mdi-play
+            </v-icon>
         </v-btn>
     </div>
+
+
+
+  <div class="text-center" v-if="track!=null">
+    <v-bottom-sheet dark inset v-model="player">
+
+      <v-card tile>
+        <v-progress-linear
+          :value="20"
+          class="my-0"
+          height="3"
+        ></v-progress-linear>
+
+        <v-list>
+          <v-list-item>
+              <v-list-item-avatar tile>
+                    <img :src="track.album.images[0].url">
+                </v-list-item-avatar>
+            <v-list-item-content>
+                
+              <v-list-item-title>{{track.artists[0].name}}</v-list-item-title>
+              <v-list-item-subtitle>{{track.name}}</v-list-item-subtitle>
+            </v-list-item-content>
+
+            <v-spacer></v-spacer>
+
+            <v-list-item-icon :class="{ 'mx-5': $vuetify.breakpoint.mdAndUp }">
+              <v-btn icon @click="stopAudio">
+                <v-icon>mdi-stop</v-icon>
+              </v-btn>
+              <v-btn icon @click="togglePlayState">
+                <v-icon>{{playback_icon}}</v-icon>
+              </v-btn>
+              <v-btn icon>
+                <v-icon :color="color" @click="toggleLike">mdi-heart</v-icon>
+              </v-btn>
+            </v-list-item-icon>
+
+            <v-list-item-icon
+              class="ml-0"
+              :class="{ 'mr-3': $vuetify.breakpoint.mdAndUp }"
+            >
+            </v-list-item-icon>
+          </v-list-item>
+        </v-list>
+      </v-card>
+    </v-bottom-sheet>
+  </div>
 
     <v-row dense>
 
@@ -125,7 +189,11 @@ export default {
             model: null,
             tab: null,
             selected: null,
-            preview: null
+            preview: null,
+            track: null,
+            player: false,
+            playback_icon: "mdi-pause",
+            color: null
         }
     },
     watch: {
@@ -191,7 +259,7 @@ export default {
             const tracks = [] 
             response.data.tracks.forEach(track => {
                 if(track.preview_url != null){
-                    tracks.push(track.preview_url);
+                    tracks.push(track);
                 }
             })
             if(this.preview != null){
@@ -200,16 +268,43 @@ export default {
             const length = tracks.length;
             const random = this.getRandomInt(length-1);
             if(tracks.length > 1){
-                this.preview = new Audio(tracks[random]);
+                this.track = tracks[random];
+                console.log(this.track);
+                this.preview = new Audio(this.track.preview_url);
             }
             this.playAudio()
         },
+        async shuffle(){
+            var length = this.related_artists.length;
+            var random = this.getRandomInt(length-1);
+            var id = this.related_artists[random].id;
+            await this.playPreview(id);
+        },
         playAudio(){
+            this.player = !this.player;
+            this.playback_icon = "mdi-pause";
             this.preview.play();
+        },
+        togglePlayState(){
+            if(this.playback_icon == "mdi-pause"){
+                this.preview.pause();
+                this.playback_icon = "mdi-play";
+            }else{
+                this.preview.play();
+                this.playback_icon = "mdi-pause";
+            }
+        },
+        toggleLike(){
+            if(this.color){
+                this.color = null;
+            }else{
+                this.color = "error";
+            }
         },
         stopAudio(){
             this.preview.pause();
             this.preview = null;
+            this.track = null
         },
 
         async getSimilarArtists(){

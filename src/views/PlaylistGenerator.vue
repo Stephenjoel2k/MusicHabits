@@ -1,7 +1,7 @@
 <template>
     <v-container width=80 justify-center>
 
-        <Header header_title="Discovery Tree" header_background='geography' />
+        <Header header_title="Playlist Generator" header_background='discover' />
         
   
         <!-- Toolbar to search a song -->
@@ -91,8 +91,6 @@
                     </v-row>
                 </v-col>
             </v-flex>
-
-            <v-list-item>
         
 
         <v-row dense>
@@ -129,6 +127,7 @@
 <script>
 
 import axios from 'axios';
+import _ from 'lodash';
 import Header from '../components/Header';
 
 export default {
