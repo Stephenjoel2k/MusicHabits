@@ -1,8 +1,15 @@
 <template>
-  
   <v-app>
-    <Navbar /> 
+    <Navbar />   
     <v-main class="ma-5">
+      <v-banner
+        v-if="deferredPrompt" color="info" dark class="text-left">
+        Get our free app. It won't take up space on your phone and also works offline!
+        <template v-slot:actions>
+          <v-btn text @click="dismiss">Dismiss</v-btn>
+          <v-btn text @click="install">Install</v-btn>
+        </template>
+    </v-banner>   
       <transition name="fade" mode="out-in">
       <router-view></router-view>
       </transition>
@@ -25,9 +32,21 @@ import BottomNavbar from './components/BottomNavbar'
 export default {
   name: 'App',
   components: { Navbar, BottomNavbar },
-  data: () => ({
-
-  }),
+  data() {
+    return {
+      deferredPrompt: null
+    };
+  },
+  created() {
+    window.addEventListener("beforeinstallprompt", e => {
+      e.preventDefault();
+      // Stash the event so it can be triggered later.
+      this.deferredPrompt = e;
+    });
+    window.addEventListener("appinstalled", () => {
+      this.deferredPrompt = null;
+    });
+  },
   mixins: [update],
   methods: {
     isValidStorage() {
@@ -44,6 +63,12 @@ export default {
           window.location.href = 'https://yourmusichabit.herokuapp.com/auth/login';
         }
       }
+    },
+    async dismiss() {
+      this.deferredPrompt = null;
+    },
+    async install() {
+      this.deferredPrompt.prompt();
     }
   },
   mounted: function () {
