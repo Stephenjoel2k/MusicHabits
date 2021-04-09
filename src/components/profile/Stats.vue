@@ -82,7 +82,7 @@ export default {
             }
         },
         async getStatsFromAPI(){
-          const url = "http://localhost:3001/api/user/stats"
+          const url = "https://yourmusichabit.herokuapp.com/api/users/stats"
             const response = await axios.get(url, {
                 headers: {
                     Authorization: "Bearer " + localStorage.access_token,
