@@ -1,5 +1,5 @@
 <template>
-    <Header :header_title=profile.display_name header_background="profile" />
+    <Header :v-if="profile" :header_title=profile.display_name header_background="profile" />
 </template>
 
 <script>
@@ -11,7 +11,7 @@ export default {
     components: {Header},
     data() {
       return {
-          profile: ""
+          profile: null
       }
     },
     methods : {

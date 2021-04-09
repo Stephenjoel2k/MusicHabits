@@ -65,3 +65,10 @@
     }
   }
 </script>
+
+
+<style scoped>
+  .container{
+    padding: 0!important;
+  }
+</style>

@@ -9,8 +9,6 @@
         </v-btn-toggle>
 
 
-
-
         <v-slide-group v-model="model" class="pa-3" mandatory prev-icon="mdi-minus" next-icon="mdi-plus">
             <v-slide-item v-for="n in 5" :key="n" v-slot="{ active, toggle }">
                 <v-card class="ma-2" height="150" width="150" @click="toggle">
@@ -118,6 +116,3 @@ export default {
 </script>
 
 
-<style scoped>
-
-</style>

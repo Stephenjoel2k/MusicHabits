@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Navbar />   
-    <v-main class="ma-5">
+    <v-main>
       <v-banner
         v-if="deferredPrompt" color="info" dark class="text-left">
         Get our free app. It won't take up space on your phone and also works offline!
@@ -79,5 +79,6 @@ export default {
 <style>
   #app{
     background: #EAEBEB;
+    overflow-x: hidden;
   }
 </style>

@@ -1,7 +1,7 @@
 <template>
 
 
-    <v-container width=80 justify-center >
+    <v-container justify-center >
       <Header header_title="Your Top Artists" header_background='artist' />
       <TermButtons @display-top="getUserTop" />
       <Preloader :items="items"/>
@@ -66,3 +66,8 @@
   }
 </script>
 
+<style scoped>
+  .container{
+    padding: 0!important;
+  }
+</style>

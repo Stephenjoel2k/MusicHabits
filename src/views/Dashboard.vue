@@ -2,15 +2,18 @@
  
      <v-container justify-center>
 
-      <Header header_title="Dashboard" header_background='dashboard' />
+       <div class="hidden-sm-and-up">
+         <Dashboard :profile="profile" />
+       </div>
 
-      <Miniboard title="Your Top Artists" background='artist' route='/top-artists' />
-      <Miniboard title="Your Top Tracks" background='track' route='/top-tracks' />
-      <Miniboard title="Your Recents" background='recent' route='/recently-played' />
-      <Miniboard title="Discover Artists" background='discover' route='/discover-artists' />
+      <div class="hidden-sm-and-down">
+        <Miniboard title="Your Top Artists" background='artist' route='/top-artists' />
+        <Miniboard title="Your Top Tracks" background='track' route='/top-tracks' />
+        <Miniboard title="Your Recents" background='recent' route='/recently-played' />
+        <Miniboard title="Discover Artists" background='discover' route='/discover-artists' />
+      </div>
 
       <Redirect />
-
     </v-container>
 
 
@@ -19,19 +22,51 @@
 
 <script>
 
-  import Header from '@/components/common/Header';
+  import Dashboard from '@/components/Dashboard';
   import Miniboard from '@/components/common/Miniboard';
   import Redirect from '@/components/common/Redirect';
 
+  import axios from 'axios';
+
   export default {
-    components: {Header, Miniboard, Redirect},
+    components: {Miniboard, Redirect, Dashboard},
     data() {
       return {
+          profile: null,
       }
     },
+    methods : {
+        async getUser(){
+            if(localStorage.profile){
+              await this.getUserFromLocal();
+            }else{
+              await this.getUserFromAPI();
+            }
+        },
+        async getUserFromAPI(){
+          const url = "https://yourmusichabit.herokuapp.com/api/user"
+            const response = await axios.get(url, {
+                headers: {
+                    Authorization: "Bearer " + localStorage.access_token,
+                    "Access-Control-Allow-Origin": "*",
+                }
+            });
+            const profile = response.data.data;
+            this.profile = profile
+            localStorage.setItem('profile', JSON.stringify(profile));
+        },
+        async getUserFromLocal(){
+          this.profile = JSON.parse(localStorage.getItem('profile'));
+        }
+    },
+    async mounted(){
+      await this.getUser();
+    }
   }
 </script>
 
 <style scoped>
-
+  .container{
+    padding: 0;
+  }
 </style>
