@@ -69,7 +69,7 @@ export default {
                 success = true;
                 var image1 = randomArtist1.images[0].url;
                 var image2 = randomArtist2.images[0].url;
-                var url = "http://localhost:3001/api/miscellaneous/colors";
+                var url = "https://yourmusichabit.herokuapp.com/api/miscellaneous/colors";
                 var response = await axios.get(url, {
                     headers: {
                         "Access-Control-Allow-Origin": "*",
