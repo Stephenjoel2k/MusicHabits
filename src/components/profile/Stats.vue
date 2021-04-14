@@ -4,9 +4,9 @@
         <v-row align="center" justify="center">
             <v-btn-toggle mandatory class="mb-4">
             <v-tabs>
-                <v-tab class="caption black white--text" @click="month">This Month</v-tab>
-                <v-tab class="caption black white--text" @click="week">This Week</v-tab>
                 <v-tab class="caption black white--text" @click="today">Today</v-tab>
+                <v-tab class="caption black white--text" @click="week">This Week</v-tab>
+                <v-tab class="caption black white--text" @click="month">This Month</v-tab>
             </v-tabs>
             </v-btn-toggle>
         </v-row>
@@ -71,7 +71,7 @@ export default {
         
             //Related to fetch request for user history
             count: 0,    // 0 = today/this week, 1 = yesterday/last week
-            type: "months",
+            type: "days",
             
             //Returned value
             topTracks: null,
@@ -116,16 +116,22 @@ export default {
             return require('@/assets/slidegroup/' + image + '.png');
         },
         today(){
+            this.artists = [];
+            this.tracks = [];
             this.count = 0;
             this.type = 'days';
             this.getStats();
         },
         week(){
+            this.artists = [];
+            this.tracks = [];
             this.count = 0;
             this.type = 'weeks';
             this.getStats();
         },
         month(){
+            this.artists = [];
+            this.tracks = [];
             this.count = 0;
             this.type = 'months'
             this.getStats();
