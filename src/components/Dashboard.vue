@@ -39,7 +39,8 @@ export default {
             random2: null,
             imageColors: null,
             bgc: {
-                backgroundColor: ''
+                background: '',
+                color: '',
             }
         }
     },
@@ -53,9 +54,6 @@ export default {
         },
         routeTo(route){
             this.$router.push(route);
-        },
-        formatBg(image){
-            return require('@/assets/slidegroup/' + image + '.png');
         },
       async setRandom(){
         var success = false;
@@ -84,11 +82,14 @@ export default {
                 this.random1 = image1;
                 this.random2 = image2;
                 this.imageColors = imageColors;
-                this.bgc.backgroundColor = this.LightenDarkenColor(imageColors.image1[1].hex, 55);
-                } 
-            }
-        },
-        LightenDarkenColor(col,amt) {
+                const new_color1 = this.LightenDarkenColor(imageColors.image2[1].hex, -10);
+                const new_color2 = this.LightenDarkenColor(imageColors.image2[1].hex, 55);
+                this.bgc.background = `linear-gradient( 135deg,${new_color1}, ${new_color2})` 
+                this.bgc.color = this.LightenDarkenColor(imageColors.image1[0].hex, 200);
+            } 
+        }
+    },
+    LightenDarkenColor(col,amt) {
             var usePound = false;
             if ( col[0] == "#" ) {
                 col = col.slice(1);
@@ -113,7 +114,20 @@ export default {
             else if  ( g < 0 ) g = 0;
 
             return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
-        },
+    },
+    isMyColorBright(color){
+            var r = color.red;
+            var g = color.green;
+            var b = color.blue;
+
+            var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+
+            if (luma < 40) {
+                console.log("too dark")
+            }else{
+                console.log("bright")
+            }
+    },
     async getUserTop(){
          var queryName = "artists" + this.term;
          const artist = sessionStorage.getItem(queryName);
@@ -123,7 +137,7 @@ export default {
           await this.getUserTopFromAPI(queryName);
         }
       },
-      async getUserTopFromAPI(queryName){
+    async getUserTopFromAPI(queryName){
         const url = "https://yourmusichabit.herokuapp.com/api/user/top-artists?term=" + this.term;
             const response = await axios.get(url, {
                 headers: {
@@ -134,10 +148,10 @@ export default {
         const data = response.data.data;
         sessionStorage.setItem(queryName, JSON.stringify(data));
         this.items = data.items;
-      },
-      async getUserTopFromLocal(queryName){
+    },
+    async getUserTopFromLocal(queryName){
         this.items = JSON.parse(sessionStorage.getItem(queryName)).items;
-      },
+    },
       
     },
     async mounted(){
