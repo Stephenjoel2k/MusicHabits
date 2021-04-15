@@ -312,8 +312,36 @@ export default {
         },
         getRandomInt(max) {
             return Math.floor(Math.random() * Math.floor(max));
+        },
+        async getUserTop(term){
+         this.term = term;
+         var queryName = "artists" + term;
+         const artist = sessionStorage.getItem(queryName);
+        if(artist){
+          await this.getUserTopFromLocal(queryName);
+        }else{
+          await this.getUserTopFromAPI(queryName);
         }
+      },
+      async getUserTopFromAPI(queryName){
+        const url = "https://yourmusichabit.herokuapp.com/api/user/top-artists?term=" + this.term;
+            const response = await axios.get(url, {
+                headers: {
+                    Authorization: "Bearer " + localStorage.access_token,
+                    "Access-Control-Allow-Origin": "*",
+                }
+            });
+        const data = response.data.data;
+        sessionStorage.setItem(queryName, JSON.stringify(data));
+        this.items = data.items;
+      },
+      async getUserTopFromLocal(queryName){
+        this.items = JSON.parse(sessionStorage.getItem(queryName)).items;
+      },
     },
+    async mounted(){
+        await this.getUserTop("short_term");
+    }
 }
 </script>
 

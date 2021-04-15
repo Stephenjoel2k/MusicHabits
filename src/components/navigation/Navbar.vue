@@ -42,7 +42,8 @@ export default {
         [ 'mdi-account', 'Top Artists', '/top-artists' ],
         [ 'mdi-album', 'Top Tracks',  '/top-tracks' ],
         [ 'mdi-history', 'Recent', '/recently-played' ],
-        [ 'mdi-account-search', 'Discover Artists', '/discover-artists' ]
+        [ 'mdi-account-search', 'Discover Artists', '/discover-artists' ],
+        [ 'mdi-playlist-plus', 'Playlist Generator', '/generate-playlists' ]
       ],
       value: 1,
     }

@@ -18,6 +18,11 @@
         <v-icon>mdi-account-search</v-icon>
       </v-btn>
 
+      <v-btn to=/generate-playlists text>
+        <span>Generate</span>
+        <v-icon>mdi-playlist-plus</v-icon>
+      </v-btn>
+
        
 
     </v-bottom-navigation>

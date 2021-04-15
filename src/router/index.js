@@ -7,6 +7,7 @@ import Recent from '../views/Recent.vue'
 import Dashboard from '../views/Dashboard.vue'
 import Profile from '../views/Profile.vue'
 import DiscoverArtists from '../views/DiscoverArtists.vue'
+import PlaylistGenerator from '../views/PlaylistGenerator.vue'
 
 Vue.use(VueRouter)
 
@@ -47,6 +48,11 @@ const routes = [
     name: 'DiscoverArtists',
     component: DiscoverArtists
   },
+  {
+    path: '/generate-playlists',
+    name: 'PlaylistGenerator',
+    component: PlaylistGenerator
+  }
 ]
 
 const router = new VueRouter({
