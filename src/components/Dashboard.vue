@@ -13,6 +13,7 @@
                 <Miniboard title="My Recents" background='recent' route='/recently-played' />
                 <Miniboard title="My Insights" background='insight' route='/profile' />
                 <Miniboard title="Discover Artists" background='discover' route='/discover-artists' />
+                <Miniboard title="Generate Playlists" background='playlist' route='/generate-playlists' />
             </div>
         </div>
     </header>

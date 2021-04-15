@@ -1,7 +1,7 @@
 <template>
     <v-container width=80 justify-center>
 
-        <Header header_title="Generate Playlists" header_background='discover' />
+        <Header header_title="Generate Playlists" header_background='playlist' />
         
 
         <!-- Toggle Artist/Track Buttons -->
