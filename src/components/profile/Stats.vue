@@ -21,12 +21,10 @@
                 <Preloader :items="artists"/>
 
                 <div class="display-Artists" v-if="artists.length > 0">
-                    <v-card class="my-3" dark>
-                        <v-data-table
-                            :headers="headersArtists"
-                            :items="artists"
-                        ></v-data-table>
-                    </v-card>
+                    <v-data-table
+                        :headers="headersArtists"
+                        :items="artists"
+                    ></v-data-table>
                 </div>
                 </v-expansion-panel-content>
             </v-expansion-panel>
@@ -38,12 +36,10 @@
                 <Preloader :items="tracks"/>
 
                 <div class="display-Tracks" v-if="tracks.length > 0">
-                    <v-card class="my-3" dark>
-                        <v-data-table
-                            :headers="headersTracks"
-                            :items="tracks"
-                        ></v-data-table>
-                    </v-card>
+                    <v-data-table
+                        :headers="headersTracks"
+                        :items="tracks"
+                    ></v-data-table>
                 </div>
                 </v-expansion-panel-content>
             </v-expansion-panel>

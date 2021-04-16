@@ -5,7 +5,7 @@
           <v-card dark :href=item.external_urls.spotify target="_blank">
             <div class="d-flex flex-no-wrap justify-space-between">
               <div>
-                <v-card-title v-if="type == 'artist'">{{i+1}} - {{item.name}}</v-card-title>
+                <v-card-title class="info_text" v-if="type == 'artist'">{{i+1}} - {{item.name}}</v-card-title>
                 <v-card-title v-if="type == 'track'">{{i+1}} - {{item.name}}</v-card-title>
                 <v-card-subtitle v-if="type == 'artist'">{{item.genres}}</v-card-subtitle>
                 <v-card-subtitle v-if="type == 'track'">{{item.artists[0].name}}</v-card-subtitle>
@@ -34,5 +34,8 @@ export default {
 
 
 <style scoped>
-
+  .v-card__text, .v-card__title {
+    word-break: normal; /* maybe !important  */
+  }
+  
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <v-card flat class="my-3" color="#161b22" justify-space-around :to="route" link :disabled="disable ? true : false">
+    <v-card flat class="my-3 miniboard" color="#161b22" justify-space-around :to="route" link :disabled="disable ? true : false">
         <v-img :src="require('@/assets/' + background + '.png')" class="white--text align-end" height="120px">
         <v-card-text>
          
@@ -27,3 +27,20 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+  .miniboard{
+    -webkit-animation: fadein 2s alternate;
+    animation: fadein 2s alternate;
+  }
+
+    @keyframes fadein {
+        0% {opacity: 0; }
+        100% {opacity: 1;}
+    }
+    @-webkit-keyframes fadein {
+        0% {opacity: 0; }
+        100% {opacity: 1; }
+    }
+
+</style>

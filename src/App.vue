@@ -2,16 +2,8 @@
   <v-app v-bind:style="bgc">
     <Navbar @toggleMode="toggleMode"/>   
     <v-main>
-      <v-banner
-        v-if="deferredPrompt" color="info" dark class="text-left">
-        Get our free app. It won't take up space on your phone and also works offline!
-        <template v-slot:actions>
-          <v-btn text @click="dismiss">Dismiss</v-btn>
-          <v-btn text @click="install">Install</v-btn>
-        </template>
-    </v-banner>   
       <transition name="fade" mode="out-in">
-      <router-view></router-view>
+        <router-view></router-view>
       </transition>
     </v-main>
     <BottomNavbar />
@@ -27,35 +19,19 @@ export default {
   components: { Navbar, BottomNavbar },
   data() {
     return {
-      deferredPrompt: null,
       bgc: {
         backgroundColor: '',
       }
     };
   },
-  created() {
-    window.addEventListener("beforeinstallprompt", e => {
-      e.preventDefault();
-      // Stash the event so it can be triggered later.
-      this.deferredPrompt = e;
-    });
-    window.addEventListener("appinstalled", () => {
-      this.deferredPrompt = null;
-    });
-  },
   methods: {
-    async dismiss() {
-      this.deferredPrompt = null;
-    },
-    async install() {
-      this.deferredPrompt.prompt();
-    },
     applyTheme(){
       const theme = localStorage.getItem('theme');
       if(theme && theme == 'dark'){
         this.bgc.backgroundColor = "#161b22";
       }else{
         this.bgc.backgroundColor = "#eaebeb";
+        localStorage.setItem('theme', 'light');
      }
     },
     toggleMode(mode){
@@ -100,4 +76,17 @@ export default {
   #app{
     overflow-x: hidden;
   }
+
+.fade-enter-active,
+.fade-leave-active {
+  transition-duration: 0.3s;
+  transition-property: opacity;
+  transition-timing-function: ease;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0
+}
+
 </style>

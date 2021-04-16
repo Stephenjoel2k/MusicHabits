@@ -1,5 +1,5 @@
 <template>
-    <v-card flat class="my-5" color="#161b22">
+    <v-card flat class="my-5 header" color="#161b22">
         <v-img :src="formatBg(header_background)" class="white--text align-end" height="300px">
         <v-card-text>
          
@@ -35,3 +35,20 @@ export default {
 }
 </script>
 
+
+<style scoped>
+  .header{
+    -webkit-animation: fadein 2s ease-in-out;
+    animation: fadein 2s ease-in-out;
+  }
+
+    @keyframes fadein {
+        0% {opacity: 0; }
+        100% {opacity: 1;}
+    }
+    @-webkit-keyframes fadein {
+        0% {opacity: 0; }
+        100% {opacity: 1; }
+    }
+
+</style>

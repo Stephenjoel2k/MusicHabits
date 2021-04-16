@@ -51,10 +51,9 @@ export default {
         [ 'mdi-playlist-plus', 'Playlist Generator', '/generate-playlists' ]
       ],
       value: 1,
+      lightMode: localStorage.getItem('theme') ? (localStorage.getItem('theme') == 'light' ? true : false ) : false
     }
   },
-  methods : {
-  }
 }
 </script>
 
