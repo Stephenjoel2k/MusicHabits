@@ -27,11 +27,11 @@ export default {
   methods: {
     applyTheme(){
       const theme = localStorage.getItem('theme');
-      if(theme && theme == 'dark'){
-        this.bgc.backgroundColor = "#161b22";
-      }else{
+      if(theme && theme == 'light'){
         this.bgc.backgroundColor = "#eaebeb";
-        localStorage.setItem('theme', 'light');
+      }else{
+        this.bgc.backgroundColor = "#161b22";
+        localStorage.setItem('theme', 'dark');
      }
     },
     toggleMode(mode){
