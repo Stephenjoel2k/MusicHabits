@@ -429,7 +429,7 @@ a { margin:0; padding:0; font-size:100%; line-height:1; text-underline-offset: n
     position: absolute;
     left: 0;
     top: 0;
-    z-index: 999;
+    z-index: 1;
 }
 
 /* slider */
