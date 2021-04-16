@@ -86,7 +86,7 @@
                             <v-expansion-panel-content>
                                 <v-text-field
                                 label="Playlist Title"
-                                :value="playlistName"
+                                v-model="playlistName"
                                 hide-details="auto"
                                 ></v-text-field>
                             </v-expansion-panel-content>
