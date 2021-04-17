@@ -96,7 +96,7 @@
                             <v-expansion-panel-content>
                                 <v-row dense>
                                     <v-col align="center" cols="12">
-                                        <v-btn color="success" @click="generatePlaylist">
+                                        <v-btn small rounded color="green" @click="generatePlaylist">
                                             Update Playlist
                                         </v-btn>
                                     </v-col>
@@ -304,6 +304,8 @@ export default {
             }
             this.generatePlaylist();
         },
+
+
         //The autocomplete search function that calls spotify API
         doSearch: _.debounce(function() {
             if(this.search == null || this.search.length == 0) return;
@@ -331,6 +333,8 @@ export default {
             await this.getUserTopFromAPI(queryName);
             }
         },
+
+
         async getUserTopFromAPI(queryName){
             const url = `https://yourmusichabit.herokuapp.com/api/user/top-${this.type}s?term=short_term`;
                 const response = await axios.get(url, {
@@ -346,6 +350,8 @@ export default {
         async getUserTopFromLocal(queryName){
             this.items = JSON.parse(sessionStorage.getItem(queryName)).items;
         },
+
+        //playlist
         async generatePlaylist(){
             const artistIds = [], trackIds = [], genreIds = [];
             this.inspirations.forEach(i => {
@@ -408,10 +414,67 @@ export default {
                     'Content-Type': 'application/json'
                 },
             })
+        },
+
+
+        //RecentlyPlayed
+         async getRecentlyPlayed(){
+            var recents;
+            if(sessionStorage.recents){
+                recents = await this.getRecentlyPlayedFromLocal();
+            }else{
+                recents = await this.getRecentlyPlayedFromAPI();
+            }
+            return recents;
+        },
+        async getRecentlyPlayedFromAPI(){
+            const url = "https://yourmusichabit.herokuapp.com/api/user/recently-played"
+                const response = await axios.get(url, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.access_token,
+                        "Access-Control-Allow-Origin": "*",
+                    }
+                });
+            const data = response.data.data;
+            sessionStorage.setItem('recents', JSON.stringify(data));
+            return data.items;
+        },
+        async getRecentlyPlayedFromLocal(){
+            return JSON.parse(sessionStorage.getItem('recents')).items;
+        },
+        async getAudioFeatures(){
+            const recentTracks = await this.getRecentlyPlayed();
+            const ids = [];
+            recentTracks.forEach(item => ids.push(item.track.id));
+
+            const url = "https://api.spotify.com/v1/audio-features?ids=" + ids;
+            const response = await axios.get(url, {headers: {Authorization: "Bearer " + localStorage.access_token}});
+            const audioFeatures = response.data.audio_features;
+            this.getAudioFeaturesAvg(audioFeatures);
+        },
+        getAudioFeaturesAvg(audioFeatures){
+            const total = audioFeatures.length;
+            var danceability = 0, mood = 0, energy = 0, instrumentalness = 0, acousticness = 0, tempo = 0;
+            audioFeatures.forEach(audioFeature => {
+                danceability += audioFeature.danceability*100;
+                mood += audioFeature.valence*100;
+                instrumentalness += audioFeature.instrumentalness*100;
+                acousticness += audioFeature.acousticness*100;
+                tempo += audioFeature.tempo;
+                energy += audioFeature.energy*100;
+            })
+            this.danceability = danceability/total;
+            this.mood = mood/total;
+            this.instrumentalness = instrumentalness/total;
+            this.acousticness = acousticness/total;
+            this.tempo = Math.floor(tempo/total);
+            this.energy = energy/total;
         }
+
     },
     async mounted(){
         await this.getUserTop();
+        this.getAudioFeatures();
     }
 }
 </script>
