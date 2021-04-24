@@ -92,7 +92,6 @@ export default {
 
 /**Scroll */
 
-
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
@@ -125,5 +124,4 @@ export default {
 ::-webkit-resizer {
   background: #111;
 }
-
 </style>
