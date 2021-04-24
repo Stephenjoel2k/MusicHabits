@@ -89,4 +89,41 @@ export default {
 .fade-leave-active {
   opacity: 0;
 }
+
+/**Scroll */
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+/* button */
+::-webkit-scrollbar-button {
+  background: #222;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #333;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: #000;
+}
+/* The track NOT covered by the handle.
+::-webkit-scrollbar-track-piece {
+    background: #000;
+}
+/* Corner */
+::-webkit-scrollbar-corner {
+  background: #999;
+}
+/* Resizer */
+::-webkit-resizer {
+  background: #111;
+}
+
 </style>
