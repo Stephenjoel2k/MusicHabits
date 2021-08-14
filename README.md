@@ -2,6 +2,6 @@
 
 The front end for your ondemand spotify year in review needs.
 
-## Upcoming 
+## Preview
 
 https://musichabits.netlify.app/
